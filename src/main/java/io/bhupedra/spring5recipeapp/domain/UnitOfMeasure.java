@@ -33,11 +33,4 @@ public class UnitOfMeasure {
         this.description = description;
     }
 
-//    public Ingredient getIngredient() {
-//        return ingredient;
-//    }
-//
-//    public void setIngredient(Ingredient ingredient) {
-//        this.ingredient = ingredient;
-//    }
 }
