@@ -4,6 +4,7 @@ import io.bhupedra.spring5recipeapp.domain.*;
 import io.bhupedra.spring5recipeapp.repositories.CategoryRepository;
 import io.bhupedra.spring5recipeapp.repositories.RecipeRepository;
 import io.bhupedra.spring5recipeapp.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -21,6 +23,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private final UnitOfMeasureRepository unitOfMeasureRepository;
 
     public RecipeBootstrap(CategoryRepository categoryRepository, RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
+
         this.categoryRepository = categoryRepository;
         this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
@@ -28,7 +31,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+
         recipeRepository.saveAll(getRecipes());
+        log.debug("loading bootstrap data");
     }
 
     private List<Recipe> getRecipes() {
@@ -149,6 +154,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         //add to return list
         recipes.add(guacRecipe);
+        log.debug("Adding guac Recipe");
 
         //Yummy Tacos
         Recipe tacosRecipe = new Recipe();
@@ -207,6 +213,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         tacosRecipe.getCategories().add(mexicanCategory);
 
         recipes.add(tacosRecipe);
+        log.debug("Adding Tacos Recipe");
+
         return recipes;
     }
 }
